@@ -3,7 +3,7 @@ const express = require('express')
 require('dotenv').config()
 const app = express()
 const cors = require('cors');
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 //midlewere
 app.use(cors());
@@ -25,6 +25,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
 
+  
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection
@@ -37,11 +38,9 @@ async function run() {
 }
 run().catch(console.dir);
 
-
-
 //routes
 app.get('/', (req, res) => {
-  res.send('Tourism Msnsgemment Server is Running......')
+  res.send('Art & Craft Store Server is Running......')
 })
 
 app.listen(port, () => {

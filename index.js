@@ -32,7 +32,13 @@ async function run() {
       res.send(artcrafts);
     })
 
+    app.get('/artcrafts/:id', async (req, res) => {
+      const id = req.params.id
 
+      const query = { _id: new ObjectId(id) };
+      const result = await usersCllection.findOne(query);
+      res.send(result)
+  })
     
     app.post('/addartcraft',async(req,res)=>{
       const addartcraft = req.body;

@@ -39,11 +39,10 @@ async function run() {
       res.send(result)
     })
     app.get('/myartcraft/:email', async (req, res) => {
-      const email= req.params.email
-      const query = { email : email}
+      const email = req.params.email
+      const query = { email: email }
       const result = await databaseCollection.find(query).toArray()
       res.send(result)
-      console.log(result)
     })
 
     app.post('/addartcraft', async (req, res) => {
@@ -52,7 +51,12 @@ async function run() {
       res.send(result);
     })
 
-
+    app.delete('/myartcraft/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await databaseCollection.deleteOne(query)
+      res.send(result)
+    })
 
 
 

@@ -27,30 +27,36 @@ async function run() {
     // Connect to the "insertDB" database and access its "databaseCollection" collection
     const databaseCollection = client.db("Art&CraftDB").collection("art&craft");
 
-    app.get('/artcrafts',async(req,res)=>{
+    app.get('/artcrafts', async (req, res) => {
       const artcrafts = await databaseCollection.find().toArray();
       res.send(artcrafts);
     })
 
-    app.get('/artcrafts/:id', async (req, res) => {
+    app.get('/artcraft/:id', async (req, res) => {
       const id = req.params.id
-
-      const query = { _id: new ObjectId(id) };
-      const result = await usersCllection.findOne(query);
+      const query = { _id: new ObjectId(id) }
+      const result = await databaseCollection.findOne(query);
       res.send(result)
-  })
-    
-    app.post('/addartcraft',async(req,res)=>{
+    })
+    app.get('/myartcraft/:email', async (req, res) => {
+      const email= req.params.email
+      const query = { email : email}
+      const result = await databaseCollection.find(query).toArray()
+      res.send(result)
+      console.log(result)
+    })
+
+    app.post('/addartcraft', async (req, res) => {
       const addartcraft = req.body;
       const result = await databaseCollection.insertOne(addartcraft);
       res.send(result);
     })
-   
 
 
 
 
-    // Connect the client to the server	(optional starting in v4.7)
+
+    // Connect the client to the server	()
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });

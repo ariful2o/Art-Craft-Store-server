@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express')
 require('dotenv').config()
 const app = express()
@@ -24,8 +24,26 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
+    // Connect to the "insertDB" database and access its "databaseCollection" collection
+    const databaseCollection = client.db("Art&CraftDB").collection("art&craft");
 
-  
+    app.get('/artcrafts',async(req,res)=>{
+      const artcrafts = await databaseCollection.find().toArray();
+      res.send(artcrafts);
+    })
+
+
+    
+    app.post('/addartcraft',async(req,res)=>{
+      const addartcraft = req.body;
+      const result = await databaseCollection.insertOne(addartcraft);
+      res.send(result);
+    })
+   
+
+
+
+
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     // Send a ping to confirm a successful connection

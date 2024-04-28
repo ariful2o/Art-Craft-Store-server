@@ -51,6 +51,30 @@ async function run() {
       res.send(result);
     })
 
+    app.put('/updateartcraft/:id', async (req, res) => {
+      const id = req.params.id;
+      const artcraft = req.body;
+      const quary = { _id: new ObjectId(id) }
+      const options = { upsert: true };
+      const updateartcraft = {
+        $set: {
+          name: artcraft.name,
+          image: artcraft.image,
+          email: artcraft.email,
+          item_name: artcraft.item_name,
+          subcategory_Name: artcraft.subcategory_Name,
+          processing_time: artcraft.processing_time,
+          description: artcraft.description,
+          price: artcraft.price,
+          rating: artcraft.rating,
+          stock: artcraft.stock,
+          customization: artcraft.customization
+        },
+      };
+      const result = await databaseCollection.updateOne(filter, updateartcraft, options);
+      res.send(result)
+    })
+
     app.delete('/myartcraft/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }

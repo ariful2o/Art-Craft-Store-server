@@ -26,6 +26,7 @@ async function run() {
   try {
     // Connect to the "insertDB" database and access its "databaseCollection" collection
     const databaseCollection = client.db("Art&CraftDB").collection("art&craft");
+    const databaseCollectionBlogs = client.db("Art&CraftDB").collection("blogs");
 
     app.get('/artcrafts', async (req, res) => {
       const artcrafts = await databaseCollection.find().toArray();
@@ -45,10 +46,21 @@ async function run() {
       res.send(result)
     })
 
+    app.get('/blogs',async(req,res)=>{
+      const blogs = await databaseCollectionBlogs.find().toArray();
+      res.send(blogs);
+    })
+
     app.post('/addartcraft', async (req, res) => {
       const addartcraft = req.body;
       const result = await databaseCollection.insertOne(addartcraft);
       res.send(result);
+    })
+
+    app.post('/addblog',async(req,res)=>{
+      const blog=req.body;
+      const result=await databaseCollectionBlogs.insertOne(blog)
+      res.send(result)
     })
 
     app.put('/updateartcraft/:id', async (req, res) => {

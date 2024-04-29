@@ -71,8 +71,9 @@ async function run() {
           customization: artcraft.customization
         },
       };
-      const result = await databaseCollection.updateOne(filter, updateartcraft, options);
+      const result = await databaseCollection.updateOne(quary, updateartcraft, options);
       res.send(result)
+
     })
 
     app.delete('/myartcraft/:id', async (req, res) => {

@@ -46,9 +46,16 @@ async function run() {
       res.send(result)
     })
 
-    app.get('/blogs',async(req,res)=>{
+    app.get('/blogs', async (req, res) => {
       const blogs = await databaseCollectionBlogs.find().toArray();
       res.send(blogs);
+    })
+
+    app.get('/blog/:id', async (req, res) => {
+      const id = req.params.id
+      const query = { _id: new ObjectId(id) }
+      const result = await databaseCollectionBlogs.findOne(query);
+      res.send(result)
     })
 
     app.post('/addartcraft', async (req, res) => {
@@ -57,9 +64,9 @@ async function run() {
       res.send(result);
     })
 
-    app.post('/addblog',async(req,res)=>{
-      const blog=req.body;
-      const result=await databaseCollectionBlogs.insertOne(blog)
+    app.post('/addblog', async (req, res) => {
+      const blog = req.body;
+      const result = await databaseCollectionBlogs.insertOne(blog)
       res.send(result)
     })
 
